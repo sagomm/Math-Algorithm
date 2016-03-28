@@ -24,7 +24,7 @@ public:
 	}
 	int weigth = 0;
 	int value = 0;
-	bool statu = 0;
+	int statu = 0;
 };
 class Knapsack
 {
@@ -34,56 +34,61 @@ public:
 };
 int planA(Knapsack pack,int limit){
 	int value = 0;
-	int _value = 0;
-	while(_value > limit){
-		value = _value;
-		int best = 0;
-		for(int i = pack.objs.begin();i != pack.objs.end();i++){
-			if((pack.objs[i].value > best) && (pack.objs[i].statu == 0)){
-				best = pack.objs[i].value;
-				pack.objs[i].statu = 1;
-			}
+	while(value < limit){
+		Object best;
+		for(auto &x : pack.objs){
+			if((x.statu == 0) && (x.value > best.value)){
+				best = &x;
+			}		
 		}
-		_value += best;	
-	}
-	return value;
-}
-int planB(pack Knapsack,int limit){
-	int value = 0;
-	int _value = 0;
-	while(_value > limit){
-		value = _value;
-		int best = MAX_WEIGTH;
-		for(int i = pack.objs.begin();i != pack.objs.end();i++){
-			if((pack.objs[i].weigth < best) && (pack.objs[i].statu == 0)){
-				best = pack.objs[i].value;
-				pack.objs[i].statu = 1;
-			}
+		if(best.statu == 0){
+			best.statu = 1;
 		}
-		_value += best;	
+
+		if(best.value == 0){
+			break;
+		}else{
+			value += best.value;			
+		}
 	}
 	return value;
 }
 
-int planC(pack Knapsack,int limit){
-	int value = 0;
-	int _value = 0;
-	while(_value > limit){
-		value = _value;
-		int best = MAX_WEIGTH;
-		for(int i = pack.objs.begin();i != pack.objs.end();i++){
-			if(((pack.objs[i].weigth/pack.objs[i].value) > best) && (pack.objs[i].statu == 0)){
-				best = pack.objs[i].value;
-				pack.objs[i].statu = 1;
-			}
-		}
-		_value += best;	
-	}
-	return value;
-}
-int planD(pack Knapsack,int limit){
+// int planB(pack Knapsack,int limit){
+// 	int value = 0;
+// 	while(value < limit){
+// 		int best = 0;	
+// 		for(auto &x : pack.objs){
+// 			if((x.statu == 0 ) && (x.weigth < best)){
+// 				cout << x << endl;
+// 				best = x.value;
+// 				x.statu = 1;
+// 			}		
+// 		}
+// 		value += best;			
+// 	}
+// 	return value;
+// }
+
+// int planC(pack Knapsack,int limit){
+// 	int value = 0;
+// 	int _value = 0;
+// 	while(_value > limit){
+// 		value = _value;
+// 		int best = MAX_WEIGTH;
+// 		for(int i = pack.objs.begin();i != pack.objs.end();i++){
+// 			if(((pack.objs[i].weigth/pack.objs[i].value) > best) && (pack.objs[i].statu == 0)){
+// 				best = pack.objs[i].value;
+// 				pack.objs[i].statu = 1;
+// 			}
+// 		}
+// 		_value += best;	
+// 	}
+// 	return value;
+// }
+// int planD(pack Knapsack,int limit){
 	
-}
+// }
 
 int main()
 {
@@ -103,10 +108,7 @@ int main()
 	cout << "请输入背包重量限制:\n";
 	cin >> limit;
 	
-	cout << planA() << endl;
-	cout << planB() << endl;
-	cout << planC() << endl;
-	cout << placD() << endl;
+	cout << planA(_knapsack,limit) << endl;
 
 	return 0;
 }
