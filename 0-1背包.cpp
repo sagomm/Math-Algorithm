@@ -33,42 +33,44 @@ public:
 };
 int planA(Knapsack pack,int limit){
 	int value = 0;
-
 	while(value < limit){
-		int ;
-		for(auto &x : pack.objs){
-			if((x.statu == 0) && (x.value > best.value)){
-				best = &x;
-			}		
+		Object* best = nullptr;
+ 		for(auto &x : pack.objs){
+ 			if(best){
+				if((x.statu == 0) && (x.value > best->value)){
+					best = &x;
+				} 					
+ 			}else{
+ 				best = &x;
+ 			}
 		}
-		if(best.statu == 0){
-			best.statu = 1;
-		}
-
-		if(best.value == 0){
+		if(best && (best->statu == 1)){
 			break;
 		}else{
-			value += best.value;			
+			best->statu = 1;
+			value += best->value;
 		}
 	}
 	return value;
 }
 
-// int planB(pack Knapsack,int limit){
-// 	int value = 0;
-// 	while(value < limit){
-// 		int best = 0;	
-// 		for(auto &x : pack.objs){
-// 			if((x.statu == 0 ) && (x.weigth < best)){
-// 				cout << x << endl;
-// 				best = x.value;
-// 				x.statu = 1;
-// 			}		
-// 		}
-// 		value += best;			
-// 	}
-// 	return value;
-// }
+int planB(pack Knapsack,int limit){
+	int value = 0;
+	while(value < limit){
+		Object* best = nullptr;	
+		for(auto &x : pack.objs){
+			if(best){
+				if((x.statu == 0) && (x.weigth < best->weigth)){
+					best = &x;
+				}
+			}else{
+				best = &x;
+			}		
+		}
+		value += best;			
+	}
+	return value;
+}
 
 // int planC(pack Knapsack,int limit){
 // 	int value = 0;
@@ -86,6 +88,7 @@ int planA(Knapsack pack,int limit){
 // 	}
 // 	return value;
 // }
+
 // int planD(pack Knapsack,int limit){
 	
 // }
@@ -110,5 +113,7 @@ int main()
 	
 	cout << planA(_knapsack,limit) << endl;
 	// cout << planB() << endl;
+	// 
+	// 
 	return 0;
 }
