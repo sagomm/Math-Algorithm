@@ -13,7 +13,6 @@ public:
 	,value(v)
 	{}
 	Object(){}
-	
 	friend istream& operator >>(istream& is,Object& obj){
 		is >> obj.weigth >> obj.value;
 		return is;
@@ -34,8 +33,9 @@ public:
 };
 int planA(Knapsack pack,int limit){
 	int value = 0;
+
 	while(value < limit){
-		Object best;
+		int ;
 		for(auto &x : pack.objs){
 			if((x.statu == 0) && (x.value > best.value)){
 				best = &x;
@@ -109,6 +109,6 @@ int main()
 	cin >> limit;
 	
 	cout << planA(_knapsack,limit) << endl;
-
+	// cout << planB() << endl;
 	return 0;
 }
